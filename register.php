@@ -20,8 +20,7 @@ $regist_error = null;
 // REGISTER BUTTON
 if (isset($_POST['regist_registerButton'])) {
 
-    $regist_fullname = $_POST['regist_fullname'];
-    $regist_login = $_POST['regist_login'];
+    $regist_username = $_POST['regist_username'];
     $regist_pass = $_POST['regist_password'];
     $regist_repass = $_POST['regist_repassword'];
 
@@ -29,12 +28,13 @@ if (isset($_POST['regist_registerButton'])) {
         $pass = null;
     }
 
-    if (!empty($regist_fullname) && !empty($regist_login) && !empty($regist_pass) && !empty($regist_repass)) {
-        $login = new ParseObject("LogIn");
-        $login->set("fullName", $regist_fullname);
-        $login->set("loginName", $regist_login);
-        $login->set("loginPassword", $regist_pass);
-        $login->save();
+    if (!empty($regist_username) && !empty($regist_pass) && !empty($regist_repass)) {
+        
+        $user = new ParseUser();
+        $user->set("username", $regist_username);
+        $user->set("password", $regist_pass);
+        $user->signUp();
+        
         header("Location: http://localhost/PARSEPHP/index.php");
         exit;
     } else {
@@ -59,12 +59,8 @@ if (isset($_POST['regist_registerButton'])) {
 
                     <table class="table1">
                         <tr>
-                            <td>Full Name</td>
-                            <td><input name="regist_fullname" type="text"></td>
-                        </tr>
-                        <tr>
                             <td>Login Name</td>
-                            <td><input name="regist_login" type="text"></td>
+                            <td><input name="regist_username" type="text"></td>
                         </tr>
                         <tr>
                             <td>Password</td>
