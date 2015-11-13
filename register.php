@@ -29,16 +29,13 @@ if (isset($_POST['regist_registerButton'])) {
         $pass = null;
     }
 
-    // PDO Statement
-    $statement = $database->prepare("INSERT INTO phpchat (fullname, login, password) VALUES (:fullname, :login, :password)");
-    $statement->bindParam(':fullname', $regist_fullname);
-    $statement->bindParam(':login', $regist_login);
-    $statement->bindParam(':password', $regist_pass);
-
     if (!empty($regist_fullname) && !empty($regist_login) && !empty($regist_pass) && !empty($regist_repass)) {
-        $statement->execute();
-        $database = null;
-        header("Location: http://localhost/PHPLAB01/login.php");
+        $login = new ParseObject("LogIn");
+        $login->set("fullName", $regist_fullname);
+        $login->set("loginName", $regist_login);
+        $login->set("loginPassword", $regist_pass);
+        $login->save();
+        header("Location: http://localhost/PARSEPHP/index.php");
         exit;
     } else {
         $regist_error = "Your Form is Invalid";
